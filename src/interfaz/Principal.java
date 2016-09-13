@@ -89,30 +89,15 @@ public class Principal extends javax.swing.JFrame {
 
     private void cmbMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMostrarActionPerformed
         // TODO add your handling code here:
-        String longitud; String contraseña= "";
+        String longitud;
+        String contraseña;
+        Password aux;
         Password usuario;
-        char[] caracteres;
-        caracteres = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-        contraseña += caracteres;
         contraseña= (txtPassword.getText());
-        longitud= (contraseña);
+        usuario = new Password (contraseña);
         
-        usuario = new Password (contraseña, longitud);
-        v.add(usuario);
+        txtSeguridad.setText(""+usuario.mostrar());
         
-        if (longitud.length()<6)
-        {
-            txtSeguridad.setText("Debil");
-        }
-        else if (longitud.length()>8)
-        {
-            JOptionPane.showMessageDialog(this, "La contraseña no puede ser mayor de 8 caracteres", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        if (longitud.length()>=6 && longitud.length()<=8)
-        {
-            txtSeguridad.setText("Fuerte");
-            JOptionPane.showMessageDialog(this, "Contraseña Creada Correctamente");
-        }
     }//GEN-LAST:event_cmbMostrarActionPerformed
 
     private void cmbCambiarContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCambiarContraseñaActionPerformed
@@ -121,22 +106,14 @@ public class Principal extends javax.swing.JFrame {
         
         op= JOptionPane.showConfirmDialog(this, "¿Esta seguro que la desea cambiar?", "Pregunta", JOptionPane.YES_OPTION);
         if (op == JOptionPane.YES_OPTION){
-        String longitud; String contraseña= "";
-        Password usuario;
-        char[] caracteres;
-        caracteres = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-        contraseña += caracteres;
-        
-        
-            
+        String longitud; String contraseña;
+        Password usuario, aux;
         
         contraseña= JOptionPane.showInputDialog("Ingrese la nueva contraseña");
         longitud= (contraseña);
         
-        usuario = new Password (contraseña, longitud);
-        v.add(usuario);
-        
-        
+        usuario = new Password (contraseña);
+        aux= usuario.CambiarContraseña(usuario);
         if (longitud.length()<6)
         {
             txtSeguridad.setText("Debil");
@@ -147,7 +124,7 @@ public class Principal extends javax.swing.JFrame {
         }
         if (longitud.length()>=6 && longitud.length()<8)
         {
-            txtPassword.setText(contraseña);
+            txtPassword.setText(""+aux.getContraseña());
             txtSeguridad.setText("Fuerte");
             JOptionPane.showMessageDialog(this, "Contraseña Creada Correctamente");
         }
