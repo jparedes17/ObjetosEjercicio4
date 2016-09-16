@@ -6,7 +6,7 @@
 package interfaz;
 
 import clases.Password;
-import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -18,9 +18,13 @@ public class Principal extends javax.swing.JFrame {
     /**
      * Creates new form Principal
      */
-    ArrayList<Password> v = new ArrayList();
+    Password persona;
     public Principal() {
         initComponents();
+        cmbBorrar.setEnabled(false);
+        cmbCambiarContraseña.setEnabled(false);
+        cmbCrear.setEnabled(true);
+        cmbMostrar.setEnabled(false);
     }
 
     /**
@@ -36,11 +40,12 @@ public class Principal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
-        jLabel3 = new javax.swing.JLabel();
-        txtSeguridad = new javax.swing.JTextField();
-        cmbMostrar = new javax.swing.JButton();
+        cmbCrear = new javax.swing.JButton();
         cmbBorrar = new javax.swing.JButton();
         cmbCambiarContraseña = new javax.swing.JButton();
+        cmbMostrar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtMostrar = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -56,80 +61,118 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, 20));
         jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 110, -1));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Seguridad de Contraseña:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
-
-        txtSeguridad.setEditable(false);
-        jPanel1.add(txtSeguridad, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 70, -1));
-
-        cmbMostrar.setText("Crear");
-        cmbMostrar.addActionListener(new java.awt.event.ActionListener() {
+        cmbCrear.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        cmbCrear.setText("Crear");
+        cmbCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbMostrarActionPerformed(evt);
+                cmbCrearActionPerformed(evt);
             }
         });
-        jPanel1.add(cmbMostrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 70, 90, -1));
+        jPanel1.add(cmbCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, 130, -1));
 
+        cmbBorrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         cmbBorrar.setText("Borrar");
-        jPanel1.add(cmbBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 90, -1));
+        cmbBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBorrarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cmbBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 180, 130, -1));
 
+        cmbCambiarContraseña.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         cmbCambiarContraseña.setText("Cambiar Contraseña");
         cmbCambiarContraseña.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbCambiarContraseñaActionPerformed(evt);
             }
         });
-        jPanel1.add(cmbCambiarContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 150, -1, -1));
+        jPanel1.add(cmbCambiarContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 140, -1, -1));
+
+        cmbMostrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        cmbMostrar.setText("Mostrar");
+        cmbMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMostrarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cmbMostrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, 130, -1));
+
+        txtMostrar.setColumns(20);
+        txtMostrar.setFont(new java.awt.Font("Monospaced", 1, 14)); // NOI18N
+        txtMostrar.setRows(5);
+        jScrollPane1.setViewportView(txtMostrar);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 200, 120));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 300));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmbMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMostrarActionPerformed
+    private void cmbCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCrearActionPerformed
         // TODO add your handling code here:
-        String longitud;
         String contraseña;
-        Password aux;
-        Password usuario;
+        if (txtPassword.getText().trim().isEmpty())
+        {
+           JOptionPane.showMessageDialog(this, "Ingrese la contraseña", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        else 
+        {
         contraseña= (txtPassword.getText());
-        usuario = new Password (contraseña);
+        persona = new Password (contraseña);
         
-        txtSeguridad.setText(""+usuario.mostrar());
+        JOptionPane.showMessageDialog(this, persona.Validar());
+        }
         
-    }//GEN-LAST:event_cmbMostrarActionPerformed
+        cmbCrear.setEnabled(true);
+        cmbMostrar.setEnabled(true);
+        cmbCambiarContraseña.setEnabled(true);
+        cmbBorrar.setEnabled(true);
+    }//GEN-LAST:event_cmbCrearActionPerformed
 
     private void cmbCambiarContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCambiarContraseñaActionPerformed
         // TODO add your handling code here:
         int op;
-        
-        op= JOptionPane.showConfirmDialog(this, "¿Esta seguro que la desea cambiar?", "Pregunta", JOptionPane.YES_OPTION);
-        if (op == JOptionPane.YES_OPTION){
-        String longitud; String contraseña;
-        Password usuario, aux;
-        
-        contraseña= JOptionPane.showInputDialog("Ingrese la nueva contraseña");
-        longitud= (contraseña);
-        
-        usuario = new Password (contraseña);
-        aux= usuario.CambiarContraseña(usuario);
-        if (longitud.length()<6)
+        op = JOptionPane.showConfirmDialog(this, "¿Esta seguro que desea cambiar la contraeña=", "Aviso", JOptionPane.YES_OPTION);
+        if (op == JOptionPane.YES_OPTION)
         {
-            txtSeguridad.setText("Debil");
-        }
-        else if (longitud.length()>8)
-        {
-            JOptionPane.showMessageDialog(this, "La contraseña no puede ser mayor de 8 caracteres", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        if (longitud.length()>=6 && longitud.length()<8)
-        {
-            txtPassword.setText(""+aux.getContraseña());
-            txtSeguridad.setText("Fuerte");
-            JOptionPane.showMessageDialog(this, "Contraseña Creada Correctamente");
-        }
+        txtPassword.setText("");
+        txtMostrar.setText("");
+        txtPassword.requestFocusInWindow();
+        String contraseña2;
+        contraseña2= (txtPassword.getText());
+        persona.CambiarContraseña(contraseña2);
+        
+        cmbMostrar.setEnabled(false);
+        cmbCrear.setEnabled(true);
+        cmbBorrar.setEnabled(false);
+        cmbCambiarContraseña.setEnabled(false);
         }
     }//GEN-LAST:event_cmbCambiarContraseñaActionPerformed
+
+    private void cmbMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMostrarActionPerformed
+        // TODO add your handling code here:
+        String aux;
+        aux = persona.mostrar();
+        txtMostrar.setText(aux);
+        
+        cmbBorrar.setEnabled(true);
+        cmbCambiarContraseña.setEnabled(true);
+        cmbCrear.setEnabled(false);
+        cmbMostrar.setEnabled(false);
+    }//GEN-LAST:event_cmbMostrarActionPerformed
+
+    private void cmbBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBorrarActionPerformed
+        // TODO add your handling code here:
+        txtPassword.setText("");
+        txtMostrar.setText("");
+        txtMostrar.requestFocusInWindow();
+        
+        cmbBorrar.setEnabled(true);
+        cmbCambiarContraseña.setEnabled(false);
+        cmbCrear.setEnabled(true);
+        cmbMostrar.setEnabled(false);
+    }//GEN-LAST:event_cmbBorrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,12 +212,13 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cmbBorrar;
     private javax.swing.JButton cmbCambiarContraseña;
+    private javax.swing.JButton cmbCrear;
     private javax.swing.JButton cmbMostrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea txtMostrar;
     private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JTextField txtSeguridad;
     // End of variables declaration//GEN-END:variables
 }
